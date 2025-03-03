@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="40" viewBox="0 0 200 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Circular Background -->
+  <circle cx="25" cy="20" r="18" fill="#00b4d8" fill-opacity="0.2"/>
+  
+  <!-- Medical Cross Symbol (centered) -->
+  <path d="M17 12h8v8h8v8h-8v-8h-8v-8z" fill="#0077b6"/>
+  
+  <!-- Text with gradient -->
+  <defs>
+    <linearGradient id="textGradient" x1="0" y1="0" x2="100%" y2="0">
+      <stop offset="0%" stop-color="#0077b6"/>
+      <stop offset="100%" stop-color="#00b4d8"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Company Name -->
+  <text x="55" y="25" font-family="Arial, sans-serif" font-weight="bold" font-size="18" fill="url(#textGradient)">
+    Image-e-Nation
+  </text>
+  
+  <!-- Tagline -->
+  <text x="55" y="35" font-family="Arial, sans-serif" font-size="10" fill="currentColor" opacity="0.8">
+    Healthcare Companion
+  </text>
+</svg>

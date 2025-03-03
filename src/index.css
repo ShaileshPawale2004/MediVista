@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://rsms.me/inter/inter.css');
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  html {
+    @apply antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply antialiased text-gray-900 dark:text-white bg-white dark:bg-gray-900;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-lg transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+  }
+
+  .btn-secondary {
+    @apply btn bg-secondary-100 text-secondary-700 hover:bg-secondary-200 focus:ring-secondary-500 dark:bg-secondary-800 dark:text-secondary-100 dark:hover:bg-secondary-700;
+  }
+
+  .container {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-xl shadow-soft-xl dark:shadow-none transition-all duration-200 hover:shadow-soft-2xl dark:hover:bg-gray-700;
+  }
+
+  .input {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-100;
+  }
+
+  .badge-secondary {
+    @apply badge bg-secondary-100 text-secondary-800 dark:bg-secondary-900 dark:text-secondary-100;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-600;
+}
+
+/* Glass Morphism */
+.glass {
+  @apply bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg border border-white border-opacity-20;
+}
+
+.glass-dark {
+  @apply bg-gray-900 bg-opacity-80 backdrop-filter backdrop-blur-lg border border-gray-700;
+}
+
+/* Animations */
+.animate-hover {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.hover-lift {
+  @apply hover:-translate-y-1 hover:shadow-soft-xl;
+}
+
+.hover-scale {
+  @apply hover:scale-105;
+}
+
+/* Loading Skeleton Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, #f6f7f8 4%, #edeef1 25%, #f6f7f8 36%);
+  background-size: 1000px 100%;
+}
+
+/* Loading Skeleton */
+.skeleton {
+  @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded;
+}
+
+/* Page Transitions */
+.page-enter {
+  @apply opacity-0;
+}
+
+.page-enter-active {
+  @apply opacity-100 transition-opacity duration-300;
+}
+
+.page-exit {
+  @apply opacity-100;
+}
+
+.page-exit-active {
+  @apply opacity-0 transition-opacity duration-300;
+}
