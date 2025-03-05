@@ -55,7 +55,7 @@ function Clinics() {
   const [lat, setLat] = useState(0);
   const [log, setLog] = useState(0);
   const [placeIds, setPlaceIds] = useState([]);
-  const xRapidApiKey = 'b5f160820fmsha766666e8473595p1ea421jsnbf80a4785207';
+  const xRapidApiKey = '2ca7d3d3camsh4083132c212f675p1dd9e7jsn0eaf4025d210';
 
   useEffect(() => {
     setClinics(initClinics);
