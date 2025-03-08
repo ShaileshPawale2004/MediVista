@@ -5,10 +5,9 @@ const steps = [
   { id: 1, label: 'Gender' },
   { id: 2, label: 'Age' },
   { id: 3, label: 'Body Part' },
-  { id: 4, label: 'Symptoms' },
-  { id: 5, label: 'Duration' },
-  { id: 6, label: 'Allergies' },
-  { id: 7, label: 'Summary' },
+  { id: 4, label: 'Duration' },
+  { id: 5, label: 'Allergies' },
+  { id: 6, label: 'Summary' },
 ];
 
 const StepIndicator = ({ currentStep }) => {

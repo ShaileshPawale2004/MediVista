@@ -242,6 +242,9 @@ function Clinics() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="input pl-10"
+                    onKeyUp={(e)=>{
+                      if(e.key=='Enter') handleOnClick();
+                    }}
                   />
                   <svg
                     className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
@@ -253,21 +256,8 @@ function Clinics() {
                   </svg>
                 </div>
               </div>
-              <div className='w-full md:w-48 input'>
-                <button onClick={handleOnClick}>Enter</button>
-              </div>
-              <div className="w-full md:w-48">
-                <select
-                  value={selectedSpecialty}
-                  onChange={(e) => setSelectedSpecialty(e.target.value)}
-                  className="input"
-                >
-                  {specialties.map((specialty) => (
-                    <option key={specialty} value={specialty}>
-                      {specialty === 'all' ? 'All Specialties' : specialty}
-                    </option>
-                  ))}
-                </select>
+              <div>
+                <button className='w-full md:w-48 input text-center' onClick={handleOnClick}>Enter</button>
               </div>
             </div>
           </motion.div>

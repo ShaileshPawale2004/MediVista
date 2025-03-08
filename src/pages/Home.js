@@ -43,16 +43,17 @@ const Home = () => {
               className="flex flex-wrap gap-4"
             >
               <Link
-                to="/clinics"
+                to="/symptom-checker"
                 className="btn bg-white text-primary-600 hover:bg-gray-50 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
               >
+              Symptom Checker
+              </Link>
+              <Link
+                to="/Clinics"
+                className="btn bg-primary-600 text-white hover:bg-primary-700 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+                >
                 Find Clinics
               </Link>
-              <button
-                className="btn bg-primary-600 text-white hover:bg-primary-700 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
-              >
-                Book Appointment
-              </button>
             </motion.div>
           </div>
         </div>
@@ -115,11 +116,6 @@ const Home = () => {
             <p className="text-lg text-white/90 mb-8">
               Book an appointment today and take the first step towards better health. Our team of experts is here to help you.
             </p>
-            <button
-              className="btn bg-white text-primary-600 hover:bg-gray-50 hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
-            >
-              Schedule a Consultation
-            </button>
           </div>
         </div>
       </section>

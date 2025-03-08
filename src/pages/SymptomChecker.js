@@ -4,6 +4,22 @@ import { useSymptomContext } from '../context/SymptomContext';
 import StepIndicator from '../components/symptom-checker/StepIndicator';
 import SelectionCard from '../components/symptom-checker/SelectionCard';
 import NavigationButtons from '../components/symptom-checker/NavigationButtons';
+import male from "../assets/images/Male.jpeg"
+import female from "../assets/images/Female.jpeg"
+import young from "../assets/images/School Boy.jpeg"
+import adult from "../assets/images/Adult Boy.jpeg"
+import senior from "../assets/images/Old Aunty.jpeg"
+import head from "../assets/images/Head.jpeg"
+import chest from "../assets/images/Chest.jpeg"
+import stomach from "../assets/images/Female Stomach.jpeg"
+import arms from "../assets/images/Arm.jpeg"
+import legs from "../assets/images/Leg.jpeg"
+import eye from "../assets/images/Eye.jpeg"
+import dust from "../assets/images/Dust.jpeg"
+import pollen from "../assets/images/Pollen.jpeg"
+import medication from "../assets/images/Medicine.jpeg"
+import food from "../assets/images/Food.jpeg"
+import pets from "../assets/images/Pet.jpeg"
 
 const heroImages = {
   1: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80", // Medical professionals
@@ -34,14 +50,14 @@ function SymptomChecker() {
               <SelectionCard
                 selected={state.gender === 'male'}
                 onClick={() => dispatch({ type: 'SET_GENDER', payload: 'male' })}
-                icon="👨"
+                icon={<img src={male} alt="Male" className="w-20 h-20 rounded-full"/>}
                 label="Male"
                 className="transform hover:scale-105 transition-transform"
               />
               <SelectionCard
                 selected={state.gender === 'female'}
                 onClick={() => dispatch({ type: 'SET_GENDER', payload: 'female' })}
-                icon="👩"
+                icon={<img src={female} alt='Female' className="w-20 h-20 rounded-full"/>}
                 label="Female"
                 className="transform hover:scale-105 transition-transform"
               />
@@ -64,21 +80,21 @@ function SymptomChecker() {
               <SelectionCard
                 selected={state.ageGroup === 'young'}
                 onClick={() => dispatch({ type: 'SET_AGE_GROUP', payload: 'young' })}
-                icon="👶"
+                icon={<img src={young} alt='Young' className="w-20 h-20 rounded-full"/>}
                 label="Young (0-18)"
                 className="transform hover:scale-105 transition-transform"
               />
               <SelectionCard
                 selected={state.ageGroup === 'adult'}
                 onClick={() => dispatch({ type: 'SET_AGE_GROUP', payload: 'adult' })}
-                icon="👨‍💼"
+                icon={<img src={adult} alt='Adult' className="w-20 h-20 rounded-full"/>}
                 label="Adult (19-59)"
                 className="transform hover:scale-105 transition-transform"
               />
               <SelectionCard
                 selected={state.ageGroup === 'senior'}
                 onClick={() => dispatch({ type: 'SET_AGE_GROUP', payload: 'senior' })}
-                icon="👴"
+                icon={<img src={senior} alt='Senior' className="w-20 h-20 rounded-full"/>}
                 label="Senior (60+)"
                 className="transform hover:scale-105 transition-transform"
               />
@@ -89,12 +105,12 @@ function SymptomChecker() {
 
       case 3:
         const bodyParts = [
-          { id: 'head', label: 'Head', icon: '🤕' },
-          { id: 'chest', label: 'Chest', icon: '💗' },
-          { id: 'stomach', label: 'Stomach', icon: '🤰' },
-          { id: 'arms', label: 'Arms', icon: '💪' },
-          { id: 'legs', label: 'Legs', icon: '🦵' },
-          { id: 'skin', label: 'Skin', icon: '🖐' },
+          { id: 'head', label: 'Head', icon: <img src={head} alt='Head' className="w-20 h-20 rounded-full"/> },
+          { id: 'chest', label: 'Chest', icon: <img src={chest} alt='Chest' className="w-20 h-20 rounded-full"/> },
+          { id: 'stomach', label: 'Stomach', icon: <img src={stomach} alt='Stomach' className="w-20 h-20 rounded-full"/>  },
+          { id: 'arms', label: 'Arms', icon: <img src={arms} alt='Arm' className="w-20 h-20 rounded-full"/> },
+          { id: 'legs', label: 'Legs', icon: <img src={legs} alt='Leg' className="w-20 h-20 rounded-full"/> },
+          { id: 'eye', label: 'Eye', icon: <img src={eye} alt='Eye' className="w-20 h-20 rounded-full"/> },
         ];
 
         return (
@@ -129,54 +145,6 @@ function SymptomChecker() {
         );
 
       case 4:
-        const symptoms = {
-          head: [
-            { id: 'headache', label: 'Headache', icon: '🤕' },
-            { id: 'dizziness', label: 'Dizziness', icon: '😵' },
-            { id: 'fever', label: 'Fever', icon: '🤒' },
-          ],
-          chest: [
-            { id: 'cough', label: 'Cough', icon: '😷' },
-            { id: 'shortness_breath', label: 'Shortness of Breath', icon: '😮‍💨' },
-            { id: 'chest_pain', label: 'Chest Pain', icon: '💔' },
-          ],
-          // Add more symptoms for other body parts
-        };
-
-        const currentSymptoms = symptoms[state.bodyPart] || [];
-
-        return (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="space-y-6"
-          >
-            <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-white mb-4">Select Symptom Type</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">Choose the symptom that best describes your condition.</p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {currentSymptoms.map((symptom, index) => (
-                <motion.div
-                  key={symptom.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <SelectionCard
-                    selected={state.symptomType === symptom.id}
-                    onClick={() => dispatch({ type: 'SET_SYMPTOM_TYPE', payload: symptom.id })}
-                    icon={symptom.icon}
-                    label={symptom.label}
-                    className="transform hover:scale-105 transition-transform"
-                  />
-                </motion.div>
-              ))}
-            </div>
-            <NavigationButtons canProceed={state.symptomType !== ''} />
-          </motion.div>
-        );
-
-      case 5:
         return (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -227,16 +195,17 @@ function SymptomChecker() {
           </motion.div>
         );
 
-      case 6:
+      case 5:
         const allergies = [
-          { id: 'dust', label: 'Dust', icon: '🏠' },
-          { id: 'pollen', label: 'Pollen', icon: '🌺' },
-          { id: 'medication', label: 'Medication', icon: '💊' },
-          { id: 'food', label: 'Food', icon: '🍽' },
-          { id: 'pets', label: 'Pets', icon: '🐱' },
+          { id: 'dust', label: 'Dust', icon:  <img src={dust} alt='dust' className="w-20 h-20 rounded-full"/> },
+          { id: 'pollen', label: 'Pollen', icon:  <img src={pollen} alt='pollen' className="w-20 h-20 rounded-full"/> },
+          { id: 'medication', label: 'Medication', icon:  <img src={medication} alt='medication' className="w-20 h-20 rounded-full"/>},
+          { id: 'food', label: 'Food', icon:  <img src={food} alt='food' className="w-20 h-20 rounded-full"/> },
+          { id: 'pets', label: 'Pets', icon:  <img src={pets} alt='pets' className="w-20 h-20 rounded-full"/> },
           { id: 'none', label: 'No Allergies', icon: '✅' },
         ];
 
+        
         return (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -268,7 +237,7 @@ function SymptomChecker() {
           </motion.div>
         );
 
-      case 7:
+      case 6:
         return (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}

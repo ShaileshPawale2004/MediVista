@@ -6,7 +6,6 @@ const initialState = {
   gender: '',
   ageGroup: '',
   bodyPart: '',
-  symptomType: '',
   duration: '',
   severity: 0,
   allergies: [],
@@ -21,8 +20,6 @@ function symptomReducer(state, action) {
       return { ...state, ageGroup: action.payload };
     case 'SET_BODY_PART':
       return { ...state, bodyPart: action.payload };
-    case 'SET_SYMPTOM_TYPE':
-      return { ...state, symptomType: action.payload };
     case 'SET_DURATION':
       return { ...state, duration: action.payload };
     case 'SET_SEVERITY':
