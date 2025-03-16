@@ -8,10 +8,10 @@ import male from "../assets/images/Male.jpeg"
 import female from "../assets/images/Female.jpeg"
 import young from "../assets/images/School Boy.jpeg"
 import adult from "../assets/images/Adult Boy.jpeg"
-import senior from "../assets/images/Old Aunty.jpeg"
+import seniorUncle from "../assets/images/Old Uncle.jpeg"
 import head from "../assets/images/Head.jpeg"
 import chest from "../assets/images/Chest.jpeg"
-import stomach from "../assets/images/Female Stomach.jpeg"
+import stomachMale from "../assets/images/Male Stomach.jpeg"
 import arms from "../assets/images/Arm.jpeg"
 import legs from "../assets/images/Leg.jpeg"
 import eye from "../assets/images/Eye.jpeg"
@@ -94,7 +94,7 @@ function SymptomChecker() {
               <SelectionCard
                 selected={state.ageGroup === 'senior'}
                 onClick={() => dispatch({ type: 'SET_AGE_GROUP', payload: 'senior' })}
-                icon={<img src={senior} alt='Senior' className="w-20 h-20 rounded-full"/>}
+                icon={<img src={seniorUncle} alt='SeniorUncle' className="w-20 h-20 rounded-full"/>}
                 label="Senior (60+)"
                 className="transform hover:scale-105 transition-transform"
               />
@@ -107,7 +107,7 @@ function SymptomChecker() {
         const bodyParts = [
           { id: 'head', label: 'Head', icon: <img src={head} alt='Head' className="w-20 h-20 rounded-full"/> },
           { id: 'chest', label: 'Chest', icon: <img src={chest} alt='Chest' className="w-20 h-20 rounded-full"/> },
-          { id: 'stomach', label: 'Stomach', icon: <img src={stomach} alt='Stomach' className="w-20 h-20 rounded-full"/>  },
+          { id: 'stomach', label: 'Stomach', icon: <img src={stomachMale} alt='Stomach' className="w-20 h-20 rounded-full"/>  },
           { id: 'arms', label: 'Arms', icon: <img src={arms} alt='Arm' className="w-20 h-20 rounded-full"/> },
           { id: 'legs', label: 'Legs', icon: <img src={legs} alt='Leg' className="w-20 h-20 rounded-full"/> },
           { id: 'eye', label: 'Eye', icon: <img src={eye} alt='Eye' className="w-20 h-20 rounded-full"/> },
