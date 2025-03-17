@@ -74,10 +74,6 @@ function Report() {
                 <p className="font-medium mt-1 capitalize">{state.bodyPart}</p>
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <span className="text-gray-600">Symptom Type</span>
-                <p className="font-medium mt-1 capitalize">{state.symptomType}</p>
-              </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
                 <span className="text-gray-600">Duration</span>
                 <p className="font-medium mt-1 capitalize">{state.duration}</p>
               </div>
