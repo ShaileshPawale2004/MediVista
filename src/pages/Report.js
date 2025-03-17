@@ -22,6 +22,8 @@ import pollen from "../assets/images/Pollen.jpeg"
 import medication from "../assets/images/Medicine.jpeg"
 import food from "../assets/images/Food.jpeg"
 import pets from "../assets/images/Pet.jpeg"
+import painSeverityRange from "../assets/images/PainParameter.jpg"
+
 
 function Report() {
   const { state } = useSymptomContext();

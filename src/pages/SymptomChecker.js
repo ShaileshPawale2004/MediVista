@@ -84,8 +84,8 @@ function SymptomChecker() {
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">Different age groups may experience symptoms differently. Let us know your age range.</p>
             <div className="grid grid-cols-3 gap-6">
               <SelectionCard
-                selected={state.ageGroup === 'youngMale'}
-                onClick={() => dispatch({ type: 'SET_AGE_GROUP', payload: 'youngMale' })}
+                selected={state.ageGroup === 'young'}
+                onClick={() => dispatch({ type: 'SET_AGE_GROUP', payload: 'young' })}
                 icon={<img src={state.gender==="female" ? youngFemale : youngMale} alt='YoungMale' className="w-20 h-20 rounded-full"/>}
                 label="Young (0-18)"
                 className="transform hover:scale-105 transition-transform"
