@@ -83,21 +83,21 @@ function SymptomChecker() {
               <SelectionCard
                 selected={state.ageGroup === 'youngMale'}
                 onClick={() => dispatch({ type: 'SET_AGE_GROUP', payload: 'youngMale' })}
-                icon={<img src={state.gender=="female" ? youngFemale : youngMale} alt='YoungMale' className="w-20 h-20 rounded-full"/>}
+                icon={<img src={state.gender==="female" ? youngFemale : youngMale} alt='YoungMale' className="w-20 h-20 rounded-full"/>}
                 label="Young (0-18)"
                 className="transform hover:scale-105 transition-transform"
               />
               <SelectionCard
                 selected={state.ageGroup === 'adult'}
                 onClick={() => dispatch({ type: 'SET_AGE_GROUP', payload: 'adult' })}
-                icon={<img src={state.gender=="female" ? adultFemale : adultMale} alt='Adult' className="w-20 h-20 rounded-full"/>}
+                icon={<img src={state.gender==="female" ? adultFemale : adultMale} alt='Adult' className="w-20 h-20 rounded-full"/>}
                 label="Adult (19-59)"
                 className="transform hover:scale-105 transition-transform"
               />
               <SelectionCard
                 selected={state.ageGroup === 'senior'}
                 onClick={() => dispatch({ type: 'SET_AGE_GROUP', payload: 'senior' })}
-                icon={<img src={state.gender=="female" ? seniorAunty : seniorUncle} alt='SeniorUncle' className="w-20 h-20 rounded-full"/>}
+                icon={<img src={state.gender==="female" ? seniorAunty : seniorUncle} alt='SeniorUncle' className="w-20 h-20 rounded-full"/>}
                 label="Senior (60+)"
                 className="transform hover:scale-105 transition-transform"
               />
