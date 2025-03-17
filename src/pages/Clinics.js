@@ -129,7 +129,7 @@ function Clinics() {
       url: 'https://google-map-places.p.rapidapi.com/maps/api/place/nearbysearch/json',
       params: {
         location: `${lat},${log}`,
-        radius: '1000',
+        radius: '5000',
         type: 'hospital',
         language: 'en',
         opennow: 'true',

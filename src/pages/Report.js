@@ -56,11 +56,11 @@ function Report() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-gray-50 p-4 rounded-lg">
                 <span className="text-gray-600">Gender</span>
-                <p className="font-medium mt-1 capitalize">{state.gender}</p>
+                <p className="font-medium mt-1 capitalize text-black">{state.gender} </p>
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <span className="text-gray-600">Age Group</span>
-                <p className="font-medium mt-1 capitalize">{state.ageGroup}</p>
+                <p className="font-medium mt-1 capitalize text-black">{state.ageGroup}</p>
               </div>
             </div>
           </div>
@@ -71,11 +71,11 @@ function Report() {
             <div className="space-y-4">
               <div className="bg-gray-50 p-4 rounded-lg">
                 <span className="text-gray-600">Affected Body Part</span>
-                <p className="font-medium mt-1 capitalize">{state.bodyPart}</p>
+                <p className="font-medium mt-1 capitalize text-black">{state.bodyPart}</p>
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <span className="text-gray-600">Duration</span>
-                <p className="font-medium mt-1 capitalize">{state.duration}</p>
+                <p className="font-medium mt-1 capitalize text-black">{state.duration}</p>
               </div>
             </div>
           </div>

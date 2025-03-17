@@ -24,6 +24,7 @@ import medication from "../assets/images/Medicine.jpeg"
 import food from "../assets/images/Food.jpeg"
 import pets from "../assets/images/Pet.jpeg"
 import painSeverityRange from "../assets/images/PainParameter.jpg"
+import { Link } from 'react-router-dom';
 
 const heroImages = {
   1: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80", // Medical professionals
@@ -272,7 +273,6 @@ function SymptomChecker() {
               <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
                 <h3 className="font-medium mb-2">Symptoms</h3>
                 <p>Affected Body Part: {state.bodyPart}</p>
-                <p>Symptom Type: {state.symptomType}</p>
                 <p>Duration: {state.duration}</p>
                 <p>Severity: {state.severity}/10</p>
               </div>
@@ -294,12 +294,11 @@ function SymptomChecker() {
               >
                 Start Over
               </button>
-              <button
-                onClick={() => {/* Handle submission */}}
-                className="flex-1 btn-primary"
-              >
+              <Link className="flex-1 btn-primary rounded-full" to="/Report">
+              <button>
                 Get Report
               </button>
+              </Link>
             </div>
           </motion.div>
         );
