@@ -23,6 +23,7 @@ import pollen from "../assets/images/Pollen.jpeg"
 import medication from "../assets/images/Medicine.jpeg"
 import food from "../assets/images/Food.jpeg"
 import pets from "../assets/images/Pet.jpeg"
+import painSeverityRange from "../assets/images/PainParameter.jpg"
 
 const heroImages = {
   1: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80", // Medical professionals
@@ -159,35 +160,47 @@ function SymptomChecker() {
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">Assess the duration and severity of your pain.</p>
             <div className="space-y-8">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-white-700 mb-2">
                   How long have you been experiencing this?
                 </label>
                 <select
                   value={state.duration}
                   onChange={(e) => dispatch({ type: 'SET_DURATION', payload: e.target.value })}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50"
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 text-black"
                 >
-                  <option value="">Select duration</option>
-                  <option value="today">Today</option>
-                  <option value="few_days">Few days</option>
-                  <option value="week">A week</option>
-                  <option value="month">A month or more</option>
+                  <option defaultValue={"Select duration"} value="" className='text-black'>Select duration</option>
+                  <option value="today" className='text-black'>Today</option>
+                  <option value="few_days" className='text-black'>Few days</option>
+                  <option value="week" className='text-black'>A week</option>
+                  <option value="month" className='text-black'>A month or more</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-white-700 mb-2">
                   Pain Severity (1-10)
                 </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="10"
-                  value={state.severity}
-                  onChange={(e) => dispatch({ type: 'SET_SEVERITY', payload: parseInt(e.target.value) })}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                />
-                <div className="flex justify-between text-sm text-gray-600">
+                <img src={painSeverityRange} className='h-[18rem] w-[100%]'/>
+                <div className="w-full">
+                    <input
+                      type="range"
+                      min="0"
+                      max="10"
+                      value={state.severity}
+                      onChange={(e) =>
+                        dispatch({ type: "SET_SEVERITY", payload: parseInt(e.target.value) })
+                      }
+                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    />
+                    {/* Labels for range values */}
+                    <div className="flex justify-between text-sm text-white-600 mt-2">
+                      {[...Array(11).keys()].map((num) => (
+                        <span key={num}>{num}</span>
+                      ))}
+                    </div>
+                </div>
+
+                <div className="flex justify-between text-sm text-white-600">
                   <span>Mild</span>
                   <span>Moderate</span>
                   <span>Severe</span>
@@ -205,7 +218,7 @@ function SymptomChecker() {
           { id: 'medication', label: 'Medication', icon:  <img src={medication} alt='medication' className="w-20 h-20 rounded-full"/>},
           { id: 'food', label: 'Food', icon:  <img src={food} alt='food' className="w-20 h-20 rounded-full"/> },
           { id: 'pets', label: 'Pets', icon:  <img src={pets} alt='pets' className="w-20 h-20 rounded-full"/> },
-          { id: 'none', label: 'No Allergies', icon: '✅' },
+          { id: 'none', label: 'No Allergies', icon:<span className="w-20 h-20 flex items-center justify-center rounded-full bg-gray-200 text-4xl"> ✅</span>  },
         ];
 
         
