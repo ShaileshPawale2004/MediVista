@@ -15,6 +15,7 @@ import seniorAunty from "../assets/images/Old Aunty.jpeg"
 import head from "../assets/images/Head.jpeg"
 import chest from "../assets/images/Chest.jpeg"
 import stomachMale from "../assets/images/Male Stomach.jpeg"
+import stomachFemale from "../assets/images/Female Stomach.jpeg"
 import arms from "../assets/images/Arm.jpeg"
 import legs from "../assets/images/Leg.jpeg"
 import eye from "../assets/images/Eye.jpeg"
@@ -112,7 +113,7 @@ function SymptomChecker() {
         const bodyParts = [
           { id: 'head', label: 'Head', icon: <img src={head} alt='Head' className="w-20 h-20 rounded-full"/> },
           { id: 'chest', label: 'Chest', icon: <img src={chest} alt='Chest' className="w-20 h-20 rounded-full"/> },
-          { id: 'stomach', label: 'Stomach', icon: <img src={stomachMale} alt='Stomach' className="w-20 h-20 rounded-full"/>  },
+          { id: 'stomach', label: 'Stomach', icon: <img src={state.gender==="male" ? stomachMale : stomachFemale} alt='Stomach' className="w-20 h-20 rounded-full"/>  },
           { id: 'arms', label: 'Arms', icon: <img src={arms} alt='Arm' className="w-20 h-20 rounded-full"/> },
           { id: 'legs', label: 'Legs', icon: <img src={legs} alt='Leg' className="w-20 h-20 rounded-full"/> },
           { id: 'eye', label: 'Eye', icon: <img src={eye} alt='Eye' className="w-20 h-20 rounded-full"/> },

@@ -2,6 +2,26 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSymptomContext } from '../context/SymptomContext';
 import { generatePDF } from '../utils/pdfGenerator';
+import male from "../assets/images/Male.jpeg"
+import female from "../assets/images/Female.jpeg"
+import youngMale from "../assets/images/School Boy.jpeg"
+import youngFemale from "../assets/images/School Girl.jpeg"
+import adultMale from "../assets/images/Adult Boy.jpeg"
+import adultFemale from "../assets/images/Adult Girl.jpeg"
+import seniorUncle from "../assets/images/Old Uncle.jpeg"
+import seniorAunty from "../assets/images/Old Aunty.jpeg"
+import head from "../assets/images/Head.jpeg"
+import chest from "../assets/images/Chest.jpeg"
+import stomachMale from "../assets/images/Male Stomach.jpeg"
+import stomachFemale from "../assets/images/Female Stomach.jpeg"
+import arms from "../assets/images/Arm.jpeg"
+import legs from "../assets/images/Leg.jpeg"
+import eye from "../assets/images/Eye.jpeg"
+import dust from "../assets/images/Dust.jpeg"
+import pollen from "../assets/images/Pollen.jpeg"
+import medication from "../assets/images/Medicine.jpeg"
+import food from "../assets/images/Food.jpeg"
+import pets from "../assets/images/Pet.jpeg"
 
 function Report() {
   const { state } = useSymptomContext();
@@ -35,11 +55,45 @@ function Report() {
     });
   };
 
+  const handleGender = () => (state.gender === "male" ? male : female);
+
+  const handleAge = ()=>{
+    if(state.gender==="male"){
+      if(state.ageGroup==="young") return youngMale;
+      else if(state.ageGroup==="adult") return adultMale;
+      else return seniorUncle;
+    } else{
+      if(state.ageGroup==="young") return youngFemale;
+      else if(state.ageGroup==="adult") return adultFemale;
+      else return seniorAunty;
+    }
+  }
+  
+  const handleAffectedBodyPart = () => {
+    const bodyPartImages = { head, chest, stomach: state.gender === "male" ? stomachMale : stomachFemale, arms, legs, eye };
+    return bodyPartImages[state.bodyPart] || "";
+  };
+  
+
+  const allergyImages = {
+    dust: dust,
+    pollen: pollen,
+    medication: medication,
+    food: food,
+    pets: pets
+  };
+  
+
   return (
     <div className="pt-20 min-h-screen bg-background-light">
+      
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div id="report-content" className="bg-white rounded-lg shadow-md p-8">
           {/* Header */}
+          <div className="text-center mb-6">
+          <h1 className="text-4xl font-bold text-primary">MediVista</h1>
+          <p className="text-gray-600 text-lg">Your Personalized Health Report</p>
+        </div>
           <div className="border-b pb-6 mb-6">
             <div className="flex justify-between items-start mb-4">
               <h1 className="text-3xl font-bold text-primary">Health Report</h1>
@@ -52,26 +106,30 @@ function Report() {
 
           {/* Personal Information */}
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">Personal Information</h2>
+            <h2 className="text-xl font-semibold mb-4 text-black">Personal Information</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <span className="text-gray-600">Gender</span>
-                <p className="font-medium mt-1 capitalize text-black">{state.gender} </p>
+              <div className="bg-gray-50 p-6 rounded-lg flex flex-col items-center text-center shadow-md">
+                <img className="rounded-full h-24 w-24 mb-3 border-2 border-gray-300 shadow-sm" src={handleGender()} alt="Gender" />
+                <span className="text-gray-500 text-sm uppercase tracking-wide font-semibold">Gender</span>
+                <p className="font-medium text-lg capitalize text-gray-900 mt-1">{state.gender}</p>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <span className="text-gray-600">Age Group</span>
-                <p className="font-medium mt-1 capitalize text-black">{state.ageGroup}</p>
+
+              <div className="bg-gray-50 p-6 rounded-lg flex flex-col items-center text-center shadow-md">
+                <img className="rounded-full h-24 w-24 mb-3 border-2 border-gray-300 shadow-sm" src={handleAge()} alt="Age Group" />
+                <span className="text-gray-500 text-sm uppercase tracking-wide font-semibold">Age Group</span>
+                <p className="font-medium text-lg capitalize text-gray-900 mt-1">{state.ageGroup}</p>
               </div>
             </div>
           </div>
 
           {/* Symptom Details */}
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">Symptom Details</h2>
+            <h2 className="text-xl font-semibold mb-4 text-black">Symptom Details</h2>
             <div className="space-y-4">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <span className="text-gray-600">Affected Body Part</span>
-                <p className="font-medium mt-1 capitalize text-black">{state.bodyPart}</p>
+              <div className="bg-gray-50 p-6 rounded-lg flex flex-col items-center text-center shadow-md">
+               <img className="rounded-full h-24 w-24 mb-3 border-2 border-gray-300 shadow-sm" src={handleAffectedBodyPart()} alt="Age Group" />
+                <span className="text-gray-500 text-sm uppercase tracking-wide font-semibold">Affected Body Part</span>
+                <p className="font-medium text-lg capitalize text-gray-900 mt-1">{state.bodyPart}</p>
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <span className="text-gray-600">Duration</span>
@@ -82,7 +140,7 @@ function Report() {
 
           {/* Pain Assessment */}
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">Pain Assessment</h2>
+            <h2 className="text-xl font-semibold mb-4 text-black">Pain Assessment</h2>
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="mb-4">
                 <span className="text-gray-600">Severity Level</span>
@@ -103,25 +161,24 @@ function Report() {
 
           {/* Allergies */}
           <div className="mb-8">
-            <h2 className="text-xl font-semibold mb-4">Allergy Information</h2>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="flex flex-wrap gap-2">
-                {state.allergies.length > 0 ? (
-                  state.allergies.map((allergy) => (
-                    <span
-                      key={allergy}
-                      className="bg-primary/10 text-primary px-3 py-1 rounded-full"
-                    >
-                      {allergy}
-                    </span>
-                  ))
-                ) : (
-                  <p className="text-gray-600">No allergies reported</p>
-                )}
-              </div>
+            <h2 className="text-xl font-semibold mb-4 text-black">Allergy Information</h2>
+            <div className="bg-gray-50 p-6 rounded-lg shadow-md flex flex-wrap gap-4 justify-center">
+              {state.allergies.length > 0 ? (
+                state.allergies.map((allergy) => (
+                  <div key={allergy} className="flex flex-col items-center text-center">
+                    <img 
+                      src={allergyImages[allergy]} 
+                      alt={allergy} 
+                      className="w-20 h-20 rounded-full border border-gray-300 shadow-sm"
+                    />
+                    <p className="text-gray-700 mt-2">{allergy}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-600">No allergies reported</p>
+              )}
             </div>
-          </div>
-
+         </div>
           {/* Disclaimer */}
           <div className="text-sm text-gray-500 border-t pt-6 mt-8">
             <p>
