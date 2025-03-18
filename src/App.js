@@ -2,7 +2,6 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ErrorBoundary } from 'react-error-boundary';
-import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { SymptomProvider } from './context/SymptomContext';
 import { AnimatePresence } from 'framer-motion';
@@ -10,15 +9,15 @@ import Navbar from './components/Navbar';
 import ChatBot from './components/ChatBot';
 
 // Lazy loaded components
+const Selection = lazy(() => import('./pages/Selection'));
+const LoginSignup = lazy(() => import('./pages/LoginSignup')); // Added this line
 const Home = lazy(() => import('./pages/Home'));
 const SymptomChecker = lazy(() => import('./pages/SymptomChecker'));
 const Clinics = lazy(() => import('./pages/Clinics'));
 const Report = lazy(() => import('./pages/Report'));
-const Login = lazy(() => import('./pages/Login'));
-const Register = lazy(() => import('./pages/Register'));
 const Contact = lazy(() => import('./pages/Contact'));
 
-// Loading fallback with animation
+// Loading fallback
 const LoadingFallback = () => (
   <div className="min-h-screen flex items-center justify-center bg-background-light dark:bg-background-dark">
     <div className="text-center">
@@ -28,7 +27,6 @@ const LoadingFallback = () => (
   </div>
 );
 
-// Error fallback with theme support
 const ErrorFallback = ({ error }) => (
   <div className="min-h-screen flex items-center justify-center bg-background-light dark:bg-background-dark">
     <div className="text-center p-8 rounded-lg">
@@ -44,43 +42,44 @@ const ErrorFallback = ({ error }) => (
   </div>
 );
 
-// AnimatedRoutes component for page transitions
 function AnimatedRoutes() {
   const location = useLocation();
+  const showNavbar = location.pathname !== '/' && location.pathname !== '/login-signup'; // Hides Navbar on Selection and LoginSignup pages
 
   return (
-    <AnimatePresence mode="wait">
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home />} />
-        <Route path="/symptom-checker" element={<SymptomChecker />} />
-        <Route path="/clinics" element={<Clinics />} />
-        <Route path="/report" element={<Report />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
-    </AnimatePresence>
+    <div>
+      {showNavbar && <Navbar />}
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Selection />} />
+          <Route path="/login-signup" element={<LoginSignup />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/symptom-checker" element={<SymptomChecker />} />
+          <Route path="/clinics" element={<Clinics />} />
+          <Route path="/report" element={<Report />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </AnimatePresence>
+    </div>
   );
 }
+
 
 function App() {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       <HelmetProvider>
         <ThemeProvider>
-          <AuthProvider>
-            <SymptomProvider>
-              <Router>
-                <div className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-200">
-                  <Navbar />
-                  <Suspense fallback={<LoadingFallback />}>
-                    <AnimatedRoutes />
-                  </Suspense>
-                  <ChatBot />
-                </div>
-              </Router>
-            </SymptomProvider>
-          </AuthProvider>
+          <SymptomProvider>
+            <Router>
+              <div className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-200">
+                <Suspense fallback={<LoadingFallback />}>
+                  <AnimatedRoutes />
+                </Suspense>
+                <ChatBot />
+              </div>
+            </Router>
+          </SymptomProvider>
         </ThemeProvider>
       </HelmetProvider>
     </ErrorBoundary>
