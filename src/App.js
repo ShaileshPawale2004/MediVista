@@ -7,10 +7,12 @@ import { SymptomProvider } from './context/SymptomContext';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import ChatBot from './components/ChatBot';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 
 // Lazy loaded components
 const Selection = lazy(() => import('./pages/Selection'));
-const LoginSignup = lazy(() => import('./pages/LoginSignup')); // Added this line
+const LoginSignup = lazy(() => import('./pages/Login')); // Added this line
 const Home = lazy(() => import('./pages/Home'));
 const SymptomChecker = lazy(() => import('./pages/SymptomChecker'));
 const Clinics = lazy(() => import('./pages/Clinics'));
@@ -52,7 +54,8 @@ function AnimatedRoutes() {
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Selection />} />
-          <Route path="/login-signup" element={<LoginSignup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<Home />} />
           <Route path="/symptom-checker" element={<SymptomChecker />} />
           <Route path="/clinics" element={<Clinics />} />

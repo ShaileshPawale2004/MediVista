@@ -10,7 +10,7 @@ function Selection() {
             <div className="relative z-10 text-center">
                 <h1 className="text-4xl font-bold mb-8 text-white">Select Your Role</h1>
                 <div className="flex space-x-8">
-                    <div className="text-center cursor-pointer" onClick={() => navigate('/login-signup')}>
+                    <div className="text-center cursor-pointer" onClick={() => navigate('/login')}>
                         <img 
                             src="https://cdn-icons-png.flaticon.com/512/2922/2922510.png" 
                             alt="Patient" 
