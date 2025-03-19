@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 function Login() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ email: '', password: '' });
-    const [isError, setIsError] = useState(0);
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,26 +14,20 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("form data here: ", formData);
+        setError('');
         
-        axios.post("http://localhost:3001/PatientLogIn", formData).
-        then(res => {
-            console.log("res: ", res.data);
-            
-            if(res.data=="Success"){
-                navigate("/home");
-            } else{
-                setIsError(1);
-                setTimeout(() => {
-                    setIsError(0);
-                }, 3000);
-            }
-        }).catch(err => {
-            console.log(err);
-            alert("Invalid credentials");
-        })
-
-        console.log('Form submitted:', formData);
+        axios.post("http://localhost:5000/PatientLogIn", formData)
+            .then(res => {
+                if(res.data === "Success"){
+                    navigate("/home");
+                } else {
+                    setError('Invalid credentials');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                setError(err.response?.data || 'Login failed. Please try again.');
+            });
     };
 
     return (
@@ -65,6 +59,7 @@ function Login() {
                             required
                         />
                     </div>
+                    {error && <p className='text-center text-red-500 mb-4'>{error}</p>}
                     <button
                         type="submit"
                         className="w-full bg-[#0A2540] text-white p-2 rounded-md hover:bg-opacity-90"
@@ -74,9 +69,6 @@ function Login() {
                     <Link to="/signup">
                      <p>Sign Up</p>
                     </Link>
-                   {
-                    isError ? <p className='text-center text-red-500'>Invalid credentials</p> : ""
-                   }
                 </form>
             </div>
         </div>
