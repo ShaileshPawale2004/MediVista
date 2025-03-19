@@ -1,6 +1,7 @@
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import html2pdf from 'html2pdf.js';
 
 export const generatePDF = async (contentId, fileName) => {
   try {
@@ -30,5 +31,30 @@ export const generatePDF = async (contentId, fileName) => {
   } catch (error) {
     console.error("Error generating PDF:", error);
     return false;
+  }
+};
+
+
+
+
+export const sharePDF = async (elementId, filename, type = 'blob') => {
+  const element = document.getElementById(elementId);
+  const opt = {
+    margin: 1,
+    filename: filename,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
+
+  try {
+    if (type === 'blob') {
+      return await html2pdf().set(opt).from(element).output('blob');
+    } else if (type === 'datauri') {
+      return await html2pdf().set(opt).from(element).output('datauristring');
+    }
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+    throw error;
   }
 };

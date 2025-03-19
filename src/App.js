@@ -12,7 +12,6 @@ import SignUp from './pages/SignUp';
 
 // Lazy loaded components
 const Selection = lazy(() => import('./pages/Selection'));
-const LoginSignup = lazy(() => import('./pages/Login')); // Added this line
 const Home = lazy(() => import('./pages/Home'));
 const SymptomChecker = lazy(() => import('./pages/SymptomChecker'));
 const Clinics = lazy(() => import('./pages/Clinics'));
@@ -21,7 +20,7 @@ const Contact = lazy(() => import('./pages/Contact'));
 
 // Loading fallback
 const LoadingFallback = () => (
-  <div className="min-h-screen flex items-center justify-center bg-background-light dark:bg-background-dark">
+  <div className="min-h-screen flex items-center justify-center bg-background-light dark:bg-background-dark transition-colors duration-200">
     <div className="text-center">
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
       <p className="mt-4 text-text-light dark:text-text-dark">Loading...</p>
@@ -30,7 +29,7 @@ const LoadingFallback = () => (
 );
 
 const ErrorFallback = ({ error }) => (
-  <div className="min-h-screen flex items-center justify-center bg-background-light dark:bg-background-dark">
+  <div className="min-h-screen flex items-center justify-center bg-background-light dark:bg-background-dark transition-colors duration-200">
     <div className="text-center p-8 rounded-lg">
       <h2 className="text-2xl font-bold text-red-600 mb-4">Something went wrong</h2>
       <p className="text-text-light dark:text-text-dark mb-4">{error.message}</p>
@@ -46,7 +45,7 @@ const ErrorFallback = ({ error }) => (
 
 function AnimatedRoutes() {
   const location = useLocation();
-  const showNavbar = location.pathname !== '/' && location.pathname !== '/login-signup'; // Hides Navbar on Selection and LoginSignup pages
+  const showNavbar = !['/', '/login', '/signup'].includes(location.pathname);
 
   return (
     <div>
@@ -67,25 +66,24 @@ function AnimatedRoutes() {
   );
 }
 
-
 function App() {
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <HelmetProvider>
-        <ThemeProvider>
+    <ThemeProvider> {/* ✅ Moved ThemeProvider to the highest level */}
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <HelmetProvider>
           <SymptomProvider>
-            <Router>
-              <div className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-200">
+            <div className="min-h-screen bg-background-light dark:bg-background-dark transition-colors duration-200">
+              <Router>
                 <Suspense fallback={<LoadingFallback />}>
                   <AnimatedRoutes />
                 </Suspense>
-                <ChatBot />
-              </div>
-            </Router>
+              </Router>
+              <ChatBot />
+            </div>
           </SymptomProvider>
-        </ThemeProvider>
-      </HelmetProvider>
-    </ErrorBoundary>
+        </HelmetProvider>
+      </ErrorBoundary>
+    </ThemeProvider>
   );
 }
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSymptomContext } from '../context/SymptomContext';
-import { generatePDF } from '../utils/pdfGenerator';
+import { generatePDF,sharePDF } from '../utils/pdfGenerator';
 import male from "../assets/images/Male.jpeg"
 import female from "../assets/images/Female.jpeg"
 import youngMale from "../assets/images/School Boy.jpeg"
@@ -59,6 +59,67 @@ function Report() {
 
   const handleGender = () => (state.gender === "male" ? male : female);
 
+
+  const handleSharePDF = async () => {
+    setIsGenerating(true);
+    try {
+      // Generate PDF as data URI
+      const dataUri = await sharePDF('report-content', 'health-report.pdf', 'datauri');
+      
+      // Convert data URI to base64
+      const base64Data = dataUri.split(',')[1];
+      
+      // Create a Blob from the base64 data
+      const blob = new Blob([Uint8Array.from(atob(base64Data), c => c.charCodeAt(0))], { type: 'application/pdf' });
+      
+      // Create a File object from the Blob
+      const file = new File([blob], 'health-report.pdf', { type: 'application/pdf' });
+
+      // Check if Web Share API supports sharing files
+      if (navigator.share && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: 'MediVista Health Report',
+            text: 'Here is my health report from MediVista'
+          });
+        } catch (error) {
+          // Fallback to WhatsApp Web sharing
+          const messageText = encodeURIComponent("Here's my health report from MediVista");
+          window.open(`https://wa.me/?text=${messageText}`, '_blank');
+          
+          // Also trigger download
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'health-report.pdf';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }
+      } else {
+        // Fallback for browsers that don't support Web Share API
+        const messageText = encodeURIComponent("Here's my health report from MediVista");
+        window.open(`https://wa.me/?text=${messageText}`, '_blank');
+        
+        // Also trigger download
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'health-report.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error('Error sharing PDF:', error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   const handleAge = ()=>{
     if(state.gender==="male"){
       if(state.ageGroup==="young") return youngMale;
@@ -98,7 +159,7 @@ function Report() {
         </div>
           <div className="border-b pb-6 mb-6">
             <div className="flex justify-between items-start mb-4">
-              <h1 className="text-3xl font-bold text-primary">Health Report</h1>
+            <h1 className="text-3xl font-bold text-black">Health Report</h1>
               <span className="text-gray-500">{formatDate(new Date())}</span>
             </div>
             <p className="text-gray-600">
@@ -209,25 +270,57 @@ function Report() {
               </>
             ) : (
               <>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
                 Download Report
               </>
             )}
           </button>
+          {/* Update WhatsApp Share Button */}
+          <button
+            onClick={handleSharePDF}
+            disabled={isGenerating}
+            className="flex-1 bg-green-500 text-white px-6 py-3 rounded-full hover:bg-green-600 transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isGenerating ? (
+              <>
+                <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Preparing...
+              </>
+            ) : (
+              <>
+                <svg className="w-14 h-14" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                </svg>
+                Share PDF on WhatsApp
+              </>
+            )}
+          </button>
           <Link
             to="/clinics"
-            className="flex-1 bg-gray-100 text-gray-700 px-6 py-3 rounded-full hover:bg-gray-200 transition-colors duration-300 text-center"
+            className="flex items-center justify-center gap-2 flex-1 bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition-colors duration-300 text-center"
           >
+            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.134 2 5 5.134 5 9c0 4.418 4.701 10.479 6.489 12.847a1 1 0 0 0 1.622 0C14.299 19.479 19 13.418 19 9c0-3.866-3.134-7-7-7zm0 10.5A3.5 3.5 0 1 1 15.5 9 3.504 3.504 0 0 1 12 12.5z" />
+            </svg>
             Find Nearby Clinics
           </Link>
+
+
           <Link
             to="/symptom-checker"
-            className="flex-1 border border-primary text-primary px-6 py-3 rounded-full hover:bg-primary/5 transition-colors duration-300 text-center"
+            className="flex items-center justify-center gap-2 flex-1 bg-green-500 text-white px-6 py-3 rounded-full hover:bg-green-600 transition-colors duration-300 text-center"
           >
+            <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 11h-6V5a1 1 0 0 0-2 0v6H5a1 1 0 0 0 0 2h6v6a1 1 0 0 0 2 0v-6h6a1 1 0 0 0 0-2z" />
+            </svg>
             Start New Check
           </Link>
+
         </div>
       </div>
     </div>
