@@ -301,13 +301,13 @@ function Report() {
             )}
           </button>
           <Link
-            to="/clinics"
+            to="/suggestedclinics"
             className="flex items-center justify-center gap-2 flex-1 bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition-colors duration-300 text-center"
           >
             <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C8.134 2 5 5.134 5 9c0 4.418 4.701 10.479 6.489 12.847a1 1 0 0 0 1.622 0C14.299 19.479 19 13.418 19 9c0-3.866-3.134-7-7-7zm0 10.5A3.5 3.5 0 1 1 15.5 9 3.504 3.504 0 0 1 12 12.5z" />
             </svg>
-            Find Nearby Clinics
+            Our Suggestions
           </Link>
 
 

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { aside } from 'framer-motion/client';
 
 // Sample data - replace with actual API call
 const initClinics = [
@@ -52,24 +53,15 @@ function Clinics() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecialty, setSelectedSpecialty] = useState('all');
   const [clinics, setClinics] = useState(initClinics);
-  const [lat, setLat] = useState(0);
-  const [log, setLog] = useState(0);
   const [placeIds, setPlaceIds] = useState([]);
-  const xRapidApiKey = '2ca7d3d3camsh4083132c212f675p1dd9e7jsn0eaf4025d210';
+  const xRapidApiKey = '5fbed5117dmsh8c9a4b95711434cp132a06jsnc1fa0463075b';
 
   useEffect(() => {
-    setClinics(initClinics);
+    setClinics([]);
   }, []);
 
   const specialties = ['all', 'General Practice', 'Family Medicine', 'Pediatrics', 'Dentistry'];
 
-  const filteredClinics = clinics.filter((clinic) => {
-    const matchesSearch =
-      clinic.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      clinic.address.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesSpecialty = selectedSpecialty === 'all' || clinic.specialty === selectedSpecialty;
-    return matchesSearch && matchesSpecialty;
-  });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -92,71 +84,62 @@ function Clinics() {
     },
   };
 
-  const getLatAndLog = async (place) => {
-    console.log('98 lat and log entry\n');
 
-    const options = {
-      method: 'GET',
-      url: 'https://address-from-to-latitude-longitude.p.rapidapi.com/geolocationapi',
-      params: {
-        address: `${place}`,
-      },
-      headers: {
-        'x-rapidapi-key': `${xRapidApiKey}`,
-        'x-rapidapi-host': 'address-from-to-latitude-longitude.p.rapidapi.com',
-      },
-    };
-
-    try {
-      const response = await axios.request(options);
-      setLat(response.data.Results[0].latitude);
-      setLog(response.data.Results[0].longitude);
-    } catch (error) {
-      console.error(error);
+  const searchTermCheck = async()=>{
+    setSearchTerm(searchTerm.toLowerCase());
+    if(!searchTerm.includes("hospital")){
+      const temp = searchTerm + " hospitals";
     }
-  };
+    return searchTerm;
+  }
 
-  const handleOnClick = async () => {
-    console.log('enter clicked\n');
-    if (searchTerm) await getLatAndLog(searchTerm);
-  };
+  const emptyClinics = async()=>{
+    setClinics([]);
+    setPlaceIds([]);
+    return;
+  }
 
-  const getPlaceIds = async (lat, log) => {
-    console.log('128: ', lat, log);
-
+  const getPlaceIds = async () => {
+    setSearchTerm(await searchTermCheck());
+    console.log("search Term: ", searchTerm);
+    await emptyClinics();
+    
     const options = {
       method: 'GET',
-      url: 'https://google-map-places.p.rapidapi.com/maps/api/place/nearbysearch/json',
+      url: 'https://google-map-places.p.rapidapi.com/maps/api/place/textsearch/json',
       params: {
-        location: `${lat},${log}`,
-        radius: '5000',
-        type: 'hospital',
-        language: 'en',
+        query: searchTerm,
+        radius: '1000',
         opennow: 'true',
-        rankby: 'prominence',
+        location: '40,-110',
+        language: 'en',
+        region: 'en',
       },
       headers: {
-        'x-rapidapi-key': `${xRapidApiKey}`,
+        'x-rapidapi-key': xRapidApiKey,
         'x-rapidapi-host': 'google-map-places.p.rapidapi.com',
       },
     };
-
+  
     try {
       const response = await axios.request(options);
       const places = response.data.results;
-      console.log('152: ', places);
-      // Save all place_ids to the state
-      setPlaceIds(places.map((place) => place.place_id));
+      const ids = places.map((place) => place.place_id);
+      console.log('Place IDs:', ids);
+      setPlaceIds(ids);
+      return ids; // Return the place IDs
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching place IDs:', error);
+      return [];
     }
   };
+  
 
-  useEffect(() => {
-    if (lat && log) {
-      getPlaceIds(lat, log);
-    }
-  }, [lat, log]);
+
+  const pushInClinics = async(newClinic)=>{
+    setClinics((prevClinics) => [...prevClinics, newClinic]);
+
+  }
 
   const getPlaceDetails = async (placeId) => {
     console.log('170: ', placeId);
@@ -192,23 +175,28 @@ function Clinics() {
         openNow: data.opening_hours?.open_now || false,
         url: data.url || 'N/A',
       };
-      setClinics((prevClinics) => [...prevClinics, newClinic]);
+
+      await pushInClinics(newClinic);
+      console.log("clinics: ", clinics);
+      
+
     } catch (error) {
       console.error('Error fetching place details:', error);
     }
   };
 
-  useEffect(() => {
-    // Loop over all placeIds and get details one by one
-    const fetchDetails = async () => {
-      for (const placeId of placeIds) {
-        await getPlaceDetails(placeId); // Wait for each place to fetch its details
-      }
-    };
-    if (placeIds.length > 0) {
-      fetchDetails();
+
+  
+  const handleOnClick = async () => {
+    console.log('Fetching place IDs...');
+    const ids = await getPlaceIds(); // Wait for place IDs to be set
+    console.log('Place IDs received:', ids);
+  
+    for (const placeId of ids) {
+      await getPlaceDetails(placeId); // Fetch details one by one
     }
-  }, [placeIds]);
+  };
+  
 
   return (
     <>
@@ -265,7 +253,7 @@ function Clinics() {
           {/* Clinics List */}
           <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid gap-6">
             <AnimatePresence>
-              {filteredClinics.map((clinic) => (
+              {clinics.map((clinic) => (
                 <motion.div key={clinic.id} variants={itemVariants} layout className="card p-6">
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>

@@ -9,6 +9,7 @@ import Navbar from './components/Navbar';
 import ChatBot from './components/ChatBot';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import SuggestedClinics from './pages/suggestedClinics';
 
 // Lazy loaded components
 const Selection = lazy(() => import('./pages/Selection'));
@@ -60,6 +61,7 @@ function AnimatedRoutes() {
           <Route path="/clinics" element={<Clinics />} />
           <Route path="/report" element={<Report />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/suggestedclinics" element={<SuggestedClinics />} />
         </Routes>
       </AnimatePresence>
     </div>
