@@ -1,1 +1,1 @@
-
+MediVista – An AI-powered healthcare platform that enables image-based symptom selection, a smart clinic locator, AI-driven health assistance, and report sharing, improving accessibility and preventive care for underserved communities.
