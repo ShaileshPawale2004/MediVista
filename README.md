@@ -2,6 +2,9 @@
 
 MediVista is an intelligent healthcare management web application that leverages modern frontend design, interactive mapping, document generation, and AI-powered features to enhance clinical workflows and patient engagement.
 
+## Video Link
+https://drive.google.com/file/d/1DKCgtRNxjbwmyTGMO9rTr1DrFXbZ1P_S/view?usp=drive_link 
+
 ## 🌐 Live Demo
 
 > _Coming soon_ — Add your deployment link here (e.g., Vercel/Netlify/Render).
@@ -90,7 +93,6 @@ Backend: Render / Railway / Heroku
 
 Database: MongoDB Atlas
 
-Video Link: https://drive.google.com/file/d/1DKCgtRNxjbwmyTGMO9rTr1DrFXbZ1P_S/view?usp=drive_link 
 
 
 
